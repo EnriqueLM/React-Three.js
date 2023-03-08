@@ -1,24 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Suspense } from "react";
+import { Canvas } from "react-three-fiber";
+import House from "./Components/House/House";
+import {OrbitControls, Sky} from '@react-three/drei';
+import Boton from "./Components/Boton";
+import "./css/App.css";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Boton />
+      <div style={{ width: "75%", height: "70vh" }}>
+        <Canvas camera={{ zoom: 1, position: [15, 20, 15] }}>
+          <ambientLight intensity={0.5} />
+          <spotLight position={[35, 35, 0]} intensity={0.3} />
+          <spotLight position={[-35, 35, 0]} intensity={0.3} />
+          <Sky
+            distance={450000}
+            sunPosition={[0, 1, 0]}
+            inclination={0}
+            azimuth={0.25}
+          />
+          <Suspense fallback={null}>
+            <House />
+          </Suspense>
+          <OrbitControls />
+        </Canvas>
+  </div>
+    </>
   );
 }
 
